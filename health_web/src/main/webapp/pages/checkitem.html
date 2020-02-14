@@ -225,6 +225,7 @@
             },
             //钩子函数，VUE对象初始化完成后自动执行
             created() {
+                this.findPage();
             },
             methods: {
                 //编辑
@@ -235,6 +236,15 @@
                 },
                 //分页查询
                 findPage() {
+                    axios.post("/checkitem/findAll.do").then(response=>{
+                        if(response.data.flag){
+                            vue.$message.success(response.data.message);
+                            vue.dataList = response.data.data;
+                        }else {
+                            vue.$message.error(response.data.message);
+                        }
+                    })
+                    // dataList
                 },
                 // 重置表单
                 resetForm() {
