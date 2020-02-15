@@ -262,16 +262,35 @@
 
 
             },
-            //分页查询
+            //分页查询(直接将pagination传过去可以嘛？以多赋少或以少赋多？)
             findPage() {
-                axios.post("/checkitem/findAll.do").then(response => {
+                var param = {
+                    currentPage:this.pagination.currentPage,
+                    pageSize:this.pagination.pageSize,
+                    queryString:this.pagination.queryString
+                };
+
+                axios.post("/checkitem/findPage.do",param).then(response=>{
+                    if (response.data.flag) {
+                        vue.$message.success(response.data.message);
+
+                        vue.pagination.total = response.data.data.total;
+                        vue.dataList = response.data.data.rows;
+                    }else {
+                        vue.$message.error(response.data.message);
+
+                    }
+                })
+
+                // 查询所有
+                /*axios.post("/checkitem/findAll.do").then(response => {
                     if (response.data.flag) {
                         vue.$message.success(response.data.message);
                         vue.dataList = response.data.data;
                     } else {
                         vue.$message.error(response.data.message);
                     }
-                })
+                })*/
                 // dataList
             },
             // 重置表单
