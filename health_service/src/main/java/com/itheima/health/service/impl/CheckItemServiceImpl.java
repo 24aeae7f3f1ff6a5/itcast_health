@@ -22,4 +22,10 @@ public class CheckItemServiceImpl implements CheckItemService {
     public List<CheckItem> findAll() {
         return checkItemDao.findAll();
     }
+
+    // 新增
+    @Override
+    public void add(CheckItem checkItem) {
+        checkItemDao.add(checkItem);
+    }
 }

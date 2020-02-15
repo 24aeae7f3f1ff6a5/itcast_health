@@ -8,4 +8,6 @@ public interface CheckItemService {
 
     // 查询所有检查项
     List<CheckItem> findAll();
+    // 新增
+    void add(CheckItem checkItem);
 }
