@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--指定namespace-->
+<mapper namespace="com.itheima.health.dao.SetmealDao">
+
+    <insert id="add" parameterType="setmeal">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_setmeal
+        (id,code,name,sex,age,helpCode,price,remark,attention,img)
+        values
+        (null,#{code},#{name},#{sex},#{age},#{helpCode},#{price},#{remark},#{attention},#{img})
+    </insert>
+
+    <!--绑定套餐和检查组多对多关系-->
+    <insert id="setSetmealAndCheckGroup" parameterType="hashmap">
+        insert into t_setmeal_checkgroup
+        (setmeal_id,checkgroup_id)
+        values
+        (#{setmeal_id},#{checkgroup_id})
+    </insert>
+
+</mapper>
