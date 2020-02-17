@@ -1,7 +1,10 @@
 package com.itheima.health.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.itheima.health.dao.SetmealDao;
+import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,13 @@ public class SetmealServiceImpl implements SetmealService {
         if(checkgroupIds != null && checkgroupIds.length > 0) {
             setSetmealAndCheckGroup(setmeal.getId(), checkgroupIds);
         }
+    }
+
+    @Override
+    public PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString) {
+        PageHelper.startPage(currentPage,pageSize);
+        Page<Setmeal> page = setmealDao.selectByCondition(queryString);
+        return new PageResult(page.getTotal(),page.getResult());
     }
 
     private void setSetmealAndCheckGroup(Integer id, Integer[] checkgroupIds) {

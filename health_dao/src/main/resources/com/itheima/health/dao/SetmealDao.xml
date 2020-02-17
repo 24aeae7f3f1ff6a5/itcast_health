@@ -22,4 +22,12 @@
         (#{setmeal_id},#{checkgroup_id})
     </insert>
 
+    <!--分页查询-->
+    <select id="selectByCondition" parameterType="string" resultType="setmeal">
+        SELECT * FROM t_setmeal
+        <if test="queryString != null and queryString.length>0">
+            WHERE code = #{queryString} or helpCode = #{queryString} or NAME LIKE CONCAT('%',#{queryString},'%')
+        </if>
+    </select>
+
 </mapper>

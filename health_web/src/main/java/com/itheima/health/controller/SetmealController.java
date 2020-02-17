@@ -2,10 +2,13 @@ package com.itheima.health.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.health.constant.MessageConstant;
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import com.itheima.health.util.QiniuUtils;
+import org.junit.Test;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,13 +29,12 @@ public class SetmealController {
     如果实参和形参一致可以不用这个注解*/
     @RequestMapping(value = "/upload")
     //public Result upload(@RequestParam(value = "imgFile") MultipartFile imgFile) {
-    public Result upload( MultipartFile imgFile) {
+    public Result upload(MultipartFile imgFile) {
         try {
             String originalFilename = imgFile.getOriginalFilename();
             String fileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
-            QiniuUtils.upload2Qiniu(imgFile.getBytes(),fileName);
-            return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS,fileName);
-
+            QiniuUtils.upload2Qiniu(imgFile.getBytes(), fileName);
+            return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, fileName);
 
 
         } catch (IOException e) {
@@ -44,19 +46,19 @@ public class SetmealController {
     }
 
     @RequestMapping(value = "/add")
-    public Result add(@RequestBody Setmeal setmeal,Integer[] checkgroupIds) {
+    public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         try {
-            setmealService.add(setmeal,checkgroupIds);
-
+            setmealService.add(setmeal, checkgroupIds);
             return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS);
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
         }
+    }
 
-
+    @RequestMapping(value = "/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean param) {
+        PageResult pageResult = setmealService.pageQuery(param.getCurrentPage(), param.getPageSize(), param.getQueryString());
+        return pageResult;
     }
 }

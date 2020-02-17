@@ -433,7 +433,15 @@
             },
             //分页查询
             findPage() {
-
+                var param = {
+                    "currentPage":this.pagination.currentPage,
+                    "pageSize":this.pagination.pageSize,
+                    "queryString":this.pagination.queryString
+                };
+                axios.post("/setmeal/findPage.do",param).then((response)=>{
+                    this.dataList = response.data.rows;
+                    this.pagination.total = response.data.total;
+                })
             },
             // 重置表单
             resetForm() {
@@ -460,7 +468,8 @@
             },
             //切换页码
             handleCurrentChange(currentPage) {
-
+                this.pagination.currentPage = currentPage;
+                this.findPage();
             },
             // 弹出编辑窗口
             handleUpdate(row) {
