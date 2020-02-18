@@ -30,4 +30,15 @@
         </if>
     </select>
 
+    <!--根据主键ID查询-->
+    <select id="findById" parameterType="int" resultType="setmeal">
+        SELECT * FROM t_setmeal WHERE id = #{id}
+    </select>
+
+
+
+    <!--查套餐和检查项的关联关系-->
+    <select id="findCheckGroupIdsBySetmealId" parameterType="int" resultType="int">
+        SELECT checkgroup_id FROM t_setmeal_checkgroup WHERE setmeal_id = #{setmeal_id}
+    </select>
 </mapper>

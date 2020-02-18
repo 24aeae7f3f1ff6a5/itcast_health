@@ -474,10 +474,42 @@
             // 弹出编辑窗口
             handleUpdate(row) {
 
+                // 回显数据
+                axios.get("/setmeal/findById.do?id="+ row.id).then((response)=>{
+                    if (response.data.flag) {
+                        // 显示编辑窗口
+                        this.dialogFormVisible4Edit = true;
+                        // 绑定第一个选项卡
+                        this.activeName = 'first';
+                        // 回显数据
+                        this.formData = response.data.data;
+                        // 回显图片
+                        this.imageUrl = "http://q5rzlm59t.bkt.clouddn.com/" + this.formData.img ;
+                        // 查检查组信息
+                        axios.get("/checkgroup/findAll.do").then((response)=>{
+                            if (response.data.flag) {
+                                this.tableData = response.data.data;
+                                // 查套餐和检查项的关联关系
+                                axios.get("/setmeal/findCheckGroupIdsBySetmealId.do?id=" + row.id).then((res)=>{
+                                    if (res.data.flag) {
+                                        this.checkgroupIds = res.data.data;
+                                    }else {
+                                        this.$message.error(response.data.message);
+                                    }
+                                })
+                            }else {
+                                this.$message.error(response.data.message);
+                            }
+                        })
+                    } else {
+                        this.$message.error(response.data.message);
+                    }
+                });
             },
             //编辑
             handleEdit() {
 
+                this.dialogFormVisible4Edit = false;
             },
             // 删除
             handleDelete(row) {

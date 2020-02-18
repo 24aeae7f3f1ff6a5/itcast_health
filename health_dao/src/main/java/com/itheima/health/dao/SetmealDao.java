@@ -11,4 +11,8 @@ public interface SetmealDao {
     void setSetmealAndCheckGroup(Map<String, Integer> map);
 
     Page<Setmeal> selectByCondition(String queryString);
+
+    Setmeal findById(Integer id);
+
+    Integer[] findCheckGroupIdsBySetmealId(Integer id);
 }

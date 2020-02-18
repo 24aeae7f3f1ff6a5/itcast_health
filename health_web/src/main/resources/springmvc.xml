@@ -57,4 +57,7 @@
     -->
     <dubbo:consumer timeout="600000" check="false"/>
 
+
+    <import resource="classpath:spring-redis.xml"/>
+
 </beans>
