@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--指定namespace-->
+<mapper namespace="com.itheima.health.dao.OrderSettingDao">
+
+        <!--新增保存-->
+    <insert id="add" parameterType="ordersetting">
+        INSERT INTO t_ordersetting(orderDate,number,reservations) VALUES (#{orderDate},#{number},#{reservations})
+    </insert>
+
+    <!--根据预约设置时间，查询预约设置的数量-->
+    <select id="findOrderSettingCountByOrderDate" parameterType="Date" resultType="long">
+        SELECT count(*) FROM t_ordersetting WHERE orderDate = #{orderDate}
+    </select>
+
+    <!--根据预约设置射箭，更新最多预约人数-->
+    <update id="updateNumberByOrderSetting" parameterType="OrderSetting">
+        UPDATE t_ordersetting SET number = #{number} WHERE orderDate = #{orderDate}
+    </update>
+</mapper>
