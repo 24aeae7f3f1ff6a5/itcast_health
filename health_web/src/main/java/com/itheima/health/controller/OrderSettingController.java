@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/ordersetting")
@@ -41,7 +42,18 @@ public class OrderSettingController {
             e.printStackTrace();
             return new Result(false, MessageConstant.IMPORT_ORDERSETTING_FAIL);
         }
-
-
     }
+
+
+    @RequestMapping(value = "/findOrderSettingMapByMonth")
+    public Result findOrderSettingMapByMonth(String date){
+        try {
+            List<Map> map = orderSettingService.findOrderSettingMapByMonth(date);
+            return new Result(true, MessageConstant.GET_ORDERSETTING_SUCCESS,map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.GET_ORDERSETTING_FAIL);
+        }
+    }
+
 }

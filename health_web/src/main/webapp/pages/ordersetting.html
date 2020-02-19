@@ -135,9 +135,24 @@
                 leftobj: []//用于装载页面显示的月份已经进行预约设置的数据
             },
             created: function () {//在vue初始化时调用
+                // 1.初始化当前时间所对应的日期
                 this.initData(null);
+                // 2.初始化当前月对应的预约设置的数据，
+                this.createData();
             },
             methods: {
+                createData(){
+                  //  传递当前余额，返回Map
+                  axios.get("/ordersetting/findOrderSettingMapByMonth.do?date=" + this.currentYear + "-" + this.currentMonth).then((res)=>{
+                      if (res.data.flag){
+                          this.leftobj = res.data.data;
+                          this.$message.success(res.data.message);
+                      }else {
+                          this.$message.error(res.data.message);
+
+                      }
+                  })
+                },
 				//预约设置
                 handleOrderSet(day){
                 },
@@ -235,6 +250,7 @@
                 goCurrentMonth: function (year, month) {
                     var d = new Date();
                     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+                    this.createData();
                 },
 				//向前一个月
                 pickPre: function (year, month) {
@@ -244,12 +260,14 @@
                     var d = new Date(this.formatDate(year, month, 1));
                     d.setDate(0);
                     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+                    this.createData();
                 },
 				//向后一个月
                 pickNext: function (year, month) {
                     var d = new Date(this.formatDate(year, month, 1));
                     d.setDate(35);////获取指定天之后的日期
                     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+                    this.createData();
                 },
                 // 返回 类似 2016-01-02 格式的字符串
                 formatDate: function (year, month, day) {
