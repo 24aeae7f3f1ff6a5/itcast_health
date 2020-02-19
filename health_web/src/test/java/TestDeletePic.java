@@ -19,12 +19,14 @@ public class TestDeletePic {
 
     @Test
     public void test(){
-        Set<String> sdiff = jedisPool.getResource().sdiff(RedisConstant.SETMEAL_PIC_RESOURCES, RedisConstant.SETMEAL_PIC_DB_RESOURCES);
-        for (String img : sdiff) {
-            System.out.println("删除的图片名称是：" + img);
-            QiniuUtils.deleteFileFromQiniu(img);
-            jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_RESOURCES,img);
-        }
+//        Set<String> sdiff = jedisPool.getResource().sdiff(RedisConstant.SETMEAL_PIC_RESOURCES, RedisConstant.SETMEAL_PIC_DB_RESOURCES);
+//        for (String img : sdiff) {
+//            System.out.println("删除的图片名称是：" + img);
+//            QiniuUtils.deleteFileFromQiniu(img);
+//            jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_RESOURCES,img);
+//        }
+
+        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,"11");
 
     }
 }

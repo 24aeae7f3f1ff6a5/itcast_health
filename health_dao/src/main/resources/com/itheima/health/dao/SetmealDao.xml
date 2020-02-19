@@ -36,9 +36,38 @@
     </select>
 
 
-
     <!--查套餐和检查项的关联关系-->
     <select id="findCheckGroupIdsBySetmealId" parameterType="int" resultType="int">
         SELECT checkgroup_id FROM t_setmeal_checkgroup WHERE setmeal_id = #{setmeal_id}
     </select>
+
+
+    <!--更新套餐信息-->
+    <insert id="edit" parameterType="setmeal">
+        UPDATE t_setmeal
+        <set>
+            <if test="name != null and name.length>0">name = #{name},</if>
+            <if test="code != null and code.length>0">code = #{code},</if>
+            <if test="helpCode != null and helpCode.length>0">helpCode = #{helpCode},</if>
+            <if test="sex != null and sex.length>0">sex = #{sex},</if>
+            <if test="age != null and age.length>0">age = #{age},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="remark != null and remark.length>0">remark = #{remark},</if>
+            <if test="attention != null and attention.length>0">attention = #{attention},</if>
+            <if test="img != null and img.length>0">img = #{img},</if>
+        </set>
+        WHERE id = #{id}
+    </insert>
+
+
+    <!--删除套餐中间表的数据-->
+    <delete id="deleteSetmealAndCheckGroupBySetmealId" parameterType="int">
+        DELETE FROM t_setmeal_checkgroup WHERE setmeal_id = #{setmeal_id}
+    </delete>
+
+    <!--删除套餐-->
+    <delete id="delete" parameterType="int">
+        DELETE FROM t_setmeal WHERE id = #{id}
+    </delete>
+
 </mapper>

@@ -40,7 +40,7 @@ public class SetmealController {
             String originalFilename = imgFile.getOriginalFilename();
             String fileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
             QiniuUtils.upload2Qiniu(imgFile.getBytes(), fileName);
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES,fileName);
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, fileName);
             return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, fileName);
 
 
@@ -74,7 +74,7 @@ public class SetmealController {
     public Result findById(Integer id) {
         try {
             Setmeal setmeal = setmealService.findById(id);
-            return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
+            return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, setmeal);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,8 +86,8 @@ public class SetmealController {
     @RequestMapping(value = "/findCheckGroupIdsBySetmealId")
     public Result findCheckGroupIdsBySetmealId(Integer id) {
         try {
-            Integer[] ids= setmealService.findCheckGroupIdsBySetmealId(id);
-            return new Result(true, MessageConstant.GET_SETMEAL_LIST_SUCCESS,ids);
+            Integer[] ids = setmealService.findCheckGroupIdsBySetmealId(id);
+            return new Result(true, MessageConstant.GET_SETMEAL_LIST_SUCCESS, ids);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,4 +95,33 @@ public class SetmealController {
         }
     }
 
+
+    // 编辑套餐
+    @RequestMapping(value = "/edit")
+    public Result edit(Integer[] checkgroupIds, @RequestBody Setmeal setmeal) {
+        try {
+            setmealService.edit(checkgroupIds, setmeal);
+            return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.EDIT_SETMEAL_FAIL);
+        }
+    }
+
+
+    // 删除套餐
+    @RequestMapping(value = "/delete")
+    public Result delete(Integer id) {
+        try {
+            setmealService.delete(id);
+            return new Result(true, MessageConstant.DELETE_SETMEAL_SUCCESS);
+
+        } catch (RuntimeException r) {
+            return new Result(false, r.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_SETMEAL_FAIL);
+        }
+    }
 }

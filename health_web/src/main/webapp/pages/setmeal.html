@@ -395,7 +395,7 @@
             handleAvatarSuccess(response, file) {
                 if (response.flag) {
                     //http://q5rzlm59t.bkt.clouddn.com/03a36073-a140-4942-9b9b-712cecb144901.jpg
-                    this.imageUrl = "http://q5rzlm59t.bkt.clouddn.com/" + response.data ;
+                    this.imageUrl = "http://q5rzlm59t.bkt.clouddn.com/" + response.data;
                     // 赋值img属性的值
                     this.formData.img = response.data;
                     this.$message.success(response.message);
@@ -417,16 +417,16 @@
             },
             //添加
             handleAdd() {
-                axios.post("/setmeal/add.do?checkgroupIds=" + this.checkgroupIds,this.formData).then((response)=>{
-                    if (response.data.flag){
+                axios.post("/setmeal/add.do?checkgroupIds=" + this.checkgroupIds, this.formData).then((response) => {
+                    if (response.data.flag) {
                         this.dialogFormVisible = false;
                         this.$message.success(response.data.message);
-                    }else {
+                    } else {
                         this.$message.err(response.data.message);
                     }
 
 
-                }).finally(()=>{
+                }).finally(() => {
                     this.findPage();
                 })
 
@@ -434,11 +434,11 @@
             //分页查询
             findPage() {
                 var param = {
-                    "currentPage":this.pagination.currentPage,
-                    "pageSize":this.pagination.pageSize,
-                    "queryString":this.pagination.queryString
+                    "currentPage": this.pagination.currentPage,
+                    "pageSize": this.pagination.pageSize,
+                    "queryString": this.pagination.queryString
                 };
-                axios.post("/setmeal/findPage.do",param).then((response)=>{
+                axios.post("/setmeal/findPage.do", param).then((response) => {
                     this.dataList = response.data.rows;
                     this.pagination.total = response.data.total;
                 })
@@ -475,7 +475,7 @@
             handleUpdate(row) {
 
                 // 回显数据
-                axios.get("/setmeal/findById.do?id="+ row.id).then((response)=>{
+                axios.get("/setmeal/findById.do?id=" + row.id).then((response) => {
                     if (response.data.flag) {
                         // 显示编辑窗口
                         this.dialogFormVisible4Edit = true;
@@ -484,20 +484,20 @@
                         // 回显数据
                         this.formData = response.data.data;
                         // 回显图片
-                        this.imageUrl = "http://q5rzlm59t.bkt.clouddn.com/" + this.formData.img ;
+                        this.imageUrl = "http://q5rzlm59t.bkt.clouddn.com/" + this.formData.img;
                         // 查检查组信息
-                        axios.get("/checkgroup/findAll.do").then((response)=>{
+                        axios.get("/checkgroup/findAll.do").then((response) => {
                             if (response.data.flag) {
                                 this.tableData = response.data.data;
                                 // 查套餐和检查项的关联关系
-                                axios.get("/setmeal/findCheckGroupIdsBySetmealId.do?id=" + row.id).then((res)=>{
+                                axios.get("/setmeal/findCheckGroupIdsBySetmealId.do?id=" + row.id).then((res) => {
                                     if (res.data.flag) {
                                         this.checkgroupIds = res.data.data;
-                                    }else {
+                                    } else {
                                         this.$message.error(response.data.message);
                                     }
                                 })
-                            }else {
+                            } else {
                                 this.$message.error(response.data.message);
                             }
                         })
@@ -508,12 +508,40 @@
             },
             //编辑
             handleEdit() {
-
-                this.dialogFormVisible4Edit = false;
+                axios.post("/setmeal/edit.do?checkgroupIds=" + this.checkgroupIds, this.formData).then((res) => {
+                    this.dialogFormVisible4Edit = false;
+                    if (res.data.flag) {
+                        this.$message.success(res.data.message);
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                }).finally(() => {
+                    this.findPage();
+                });
             },
             // 删除
             handleDelete(row) {
-
+                this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    center: true
+                }).then((res) => {
+                    axios.get("/setmeal/delete.do?id=" + row.id).then((res) => {
+                        if (res.data.flag) {
+                            this.$message.success(res.data.message);
+                        }else {
+                            this.$message.error(res.data.message);
+                        }
+                    }).finally(()=>{
+                        this.findPage();
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                })
             }
         }
     })

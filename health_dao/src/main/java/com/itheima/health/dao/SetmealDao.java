@@ -15,4 +15,10 @@ public interface SetmealDao {
     Setmeal findById(Integer id);
 
     Integer[] findCheckGroupIdsBySetmealId(Integer id);
+
+    void edit(Setmeal setmeal);
+
+    Integer deleteSetmealAndCheckGroupBySetmealId(Integer id);
+
+    void delete(Integer id);
 }
