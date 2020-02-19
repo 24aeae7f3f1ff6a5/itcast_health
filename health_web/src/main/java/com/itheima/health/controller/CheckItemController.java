@@ -2,6 +2,7 @@ package com.itheima.health.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.health.constant.MessageConstant;
+import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckItem;
@@ -43,9 +44,14 @@ public class CheckItemController {
     };
 
     //分页查询
-    /*public Result findByPage(QueryPageBean queryPageBean){
-        return null;
-    }*/
+    @RequestMapping(value = "/findPage")
+    public PageResult findByPage(@RequestBody QueryPageBean queryPageBean){
+
+        PageResult pageResult = checkItemService.pageQuery(queryPageBean.getCurrentPage(),queryPageBean.getPageSize(),queryPageBean.getQueryString());
+
+
+        return pageResult;
+    }
 
 
 }

@@ -241,15 +241,15 @@
                 this.$refs['dataAddForm'].validate((valid) => {
                     if (valid) { // 表单校验通过
                         // 发起请求
-                        axios.post("/checkitem/add.do",this.formData).then(response => {
+                        axios.post("/checkitem/add.do", this.formData).then(response => {
                             // 隐藏添加窗口
                             this.dialogFormVisible = false;
                             if (response.data.flag) {
                                 this.$message.success(response.data.message);
                                 // 刷新页面
                                 this.findPage();
-                            }else {
-                            this.$message.error(response.data.message);
+                            } else {
+                                this.$message.error(response.data.message);
                             }
                         });
 
@@ -265,21 +265,15 @@
             //分页查询(直接将pagination传过去可以嘛？以多赋少或以少赋多？)
             findPage() {
                 var param = {
-                    currentPage:this.pagination.currentPage,
-                    pageSize:this.pagination.pageSize,
-                    queryString:this.pagination.queryString
+                    currentPage: this.pagination.currentPage,
+                    pageSize: this.pagination.pageSize,
+                    queryString: this.pagination.queryString
                 };
 
-                axios.post("/checkitem/findPage.do",param).then(response=>{
-                    if (response.data.flag) {
-                        vue.$message.success(response.data.message);
+                axios.post("/checkitem/findPage.do", param).then(response => {
+                    this.pagination.total = response.data.total;
+                    this.dataList = response.data.rows;
 
-                        vue.pagination.total = response.data.data.total;
-                        vue.dataList = response.data.data.rows;
-                    }else {
-                        vue.$message.error(response.data.message);
-
-                    }
                 })
 
                 // 查询所有

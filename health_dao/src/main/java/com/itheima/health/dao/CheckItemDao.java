@@ -11,4 +11,6 @@ public interface CheckItemDao {
 
     // 新增
     void add(CheckItem checkItem);
+
+    List<CheckItem> pageQuery(String queryString);
 }
