@@ -14,7 +14,7 @@
         SELECT count(*) FROM t_ordersetting WHERE orderDate = #{orderDate}
     </select>
 
-    <!--根据预约设置射箭，更新最多预约人数-->
+    <!--根据预约设置时间，更新最多预约人数-->
     <update id="updateNumberByOrderSetting" parameterType="OrderSetting">
         UPDATE t_ordersetting SET number = #{number} WHERE orderDate = #{orderDate}
     </update>

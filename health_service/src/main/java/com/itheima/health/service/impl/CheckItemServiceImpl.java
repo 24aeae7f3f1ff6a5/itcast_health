@@ -42,4 +42,17 @@ public class CheckItemServiceImpl implements CheckItemService {
 
         return new PageResult(checkItemPageInfo.getTotal(), checkItemPageInfo.getList());
     }
+
+    // 根据主键id删除
+    @Override
+    public void delete(Integer id) {
+        // 查询是否有关联关系
+        long count = checkItemDao.findCountByCheckItemId(id);
+        if (count>0) {
+          throw  new RuntimeException("当前检查项被检查组引用，不能删除");
+        }
+        // 删除检查项
+        checkItemDao.deleteById(id);
+
+    }
 }

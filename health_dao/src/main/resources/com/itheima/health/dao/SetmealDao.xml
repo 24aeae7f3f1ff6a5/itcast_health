@@ -70,4 +70,10 @@
         DELETE FROM t_setmeal WHERE id = #{id}
     </delete>
 
+
+    <!--查询所有套餐-->
+    <select id="getSetmeal" resultType="setmeal">
+        SELECT * FROM t_setmeal
+    </select>
+
 </mapper>

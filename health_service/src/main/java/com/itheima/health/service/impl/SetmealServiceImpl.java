@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -79,7 +80,7 @@ public class SetmealServiceImpl implements SetmealService {
         // 清空中间表数据
         Integer count = setmealDao.deleteSetmealAndCheckGroupBySetmealId(id);
         if (count>0){
-            new RuntimeException("当前套餐和检查组之间存在关联关系，不能删除");
+           throw  new RuntimeException("当前套餐和检查组之间存在关联关系，不能删除");
         }
         // 删除套餐
         setmealDao.delete(id);
@@ -91,6 +92,11 @@ public class SetmealServiceImpl implements SetmealService {
         }
 
 
+    }
+
+    @Override
+    public List<Setmeal> getSetmeal() {
+        return setmealDao.getSetmeal();
     }
 
     private void setSetmealAndCheckGroup(Integer id, Integer[] checkgroupIds) {

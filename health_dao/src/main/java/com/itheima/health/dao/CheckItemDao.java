@@ -13,4 +13,8 @@ public interface CheckItemDao {
     void add(CheckItem checkItem);
 
     List<CheckItem> pageQuery(String queryString);
+
+    long findCountByCheckItemId(Integer id);
+
+    void deleteById(Integer id);
 }

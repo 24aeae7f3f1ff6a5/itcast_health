@@ -306,6 +306,28 @@
             },
             // 删除
             handleDelete(row) {
+                this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    center: true
+                }).then((res)=>{
+                    axios.get("/checkitem/delete.do?id="+row.id).then((res)=>{
+                    if (res.data.flag) {
+                        this.$message.success(res.data.message);
+                        // 刷新页面
+                        this.findPage();
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                }).catch(()=>{
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                })
+
             }
         }
     })

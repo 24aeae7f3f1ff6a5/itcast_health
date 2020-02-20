@@ -3,6 +3,7 @@ package com.itheima.health.dao;
 import com.github.pagehelper.Page;
 import com.itheima.health.pojo.Setmeal;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SetmealDao {
@@ -21,4 +22,6 @@ public interface SetmealDao {
     Integer deleteSetmealAndCheckGroupBySetmealId(Integer id);
 
     void delete(Integer id);
+
+    List<Setmeal> getSetmeal();
 }

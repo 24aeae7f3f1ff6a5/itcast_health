@@ -6,6 +6,7 @@ import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.OrderSetting;
 import com.itheima.health.service.OrderSettingService;
 import com.itheima.health.util.POIUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,6 +54,19 @@ public class OrderSettingController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.GET_ORDERSETTING_FAIL);
+        }
+    }
+
+
+    // 根据传递的当前时间，更新可预约人数
+    @RequestMapping(value = "/editNumberByDate")
+    public Result editNumberByDate(@RequestBody OrderSetting orderSetting){
+        try {
+            orderSettingService.editNumberByDate(orderSetting);
+            return new Result(true, MessageConstant.ORDERSETTING_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.ORDERSETTING_FAIL);
         }
     }
 

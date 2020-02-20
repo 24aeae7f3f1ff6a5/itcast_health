@@ -12,6 +12,7 @@
         <module>health_pojo</module>
         <module>health_dao</module>
         <module>health_interface</module>
+        <!--<module>healthmobile_web</module>-->
         <!--<module>health_jobs</module>-->
         <!--<module>health_service</module>-->
         <!--<module>health_web</module>-->
@@ -42,6 +43,17 @@
     <!-- 依赖管理标签  必须加 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>4.4.3</version>
+            </dependency>
             <!-- Spring -->
             <dependency>
                 <groupId>org.springframework</groupId>

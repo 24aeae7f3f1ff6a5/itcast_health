@@ -3,6 +3,8 @@ package com.itheima.health.service;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.Setmeal;
 
+import java.util.List;
+
 public interface SetmealService {
     void add(Setmeal setmeal, Integer[] checkgroupIds);
 
@@ -15,4 +17,6 @@ public interface SetmealService {
     void edit(Integer[] checkgroupIds, Setmeal setmeal);
 
     void delete(Integer id);
+
+    List<Setmeal> getSetmeal();
 }
