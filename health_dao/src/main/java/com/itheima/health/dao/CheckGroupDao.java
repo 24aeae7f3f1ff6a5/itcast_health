@@ -7,4 +7,6 @@ import java.util.List;
 public interface CheckGroupDao {
 
     List<CheckGroup> findAll();
+
+    List<CheckGroup> findCheckGroupListBySetmealId(Integer id);
 }

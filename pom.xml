@@ -39,6 +39,7 @@
         <poi.version>3.14</poi.version>
         <jedis.version>2.9.0</jedis.version>
         <quartz.version>2.2.1</quartz.version>
+        <freemarker>2.3.23</freemarker>
     </properties>
     <!-- 依赖管理标签  必须加 -->
     <dependencyManagement>
@@ -267,6 +268,11 @@
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker}</version>
         </dependency>
     </dependencies>
     <build>

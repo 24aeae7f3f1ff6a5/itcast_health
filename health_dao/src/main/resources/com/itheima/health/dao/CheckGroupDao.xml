@@ -8,4 +8,9 @@
         select * from t_checkgroup
     </select>
 
+    <!--根据setmealId查询对应的checkgroup-->
+    <select id="findCheckGroupListBySetmealId" parameterType="int" resultType="checkgroup">
+        SELECT * FROM `t_checkgroup` WHERE `id` IN(SELECT `checkgroup_id` FROM `t_setmeal_checkgroup` WHERE `setmeal_id`=18)
+    </select>
+
 </mapper>

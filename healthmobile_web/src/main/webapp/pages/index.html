@@ -124,7 +124,7 @@
                     $('.indicators').append('<span></span>');
                     $('.indicators').find('span').eq(num).addClass('active');
                 }
-                $(".banner-item,.banner-roll").css('height', ht)
+                $(".banner-item,.banner-roll").css('height', ht);
 
                 function roll() {
                     tg.eq(num).animate({
@@ -152,9 +152,9 @@
                 $('.banner-item').mouseout(function() {
                     timer = setInterval(roll, 3000)
                 });
-            })
+            });
             $(window).resize(function() {
-                var ht = $('.banner-item').find('img').eq(0).height()
+                var ht = $('.banner-item').find('img').eq(0).height();
                 $(".banner-item,.banner-roll").css('height', ht)
             });
         </script>

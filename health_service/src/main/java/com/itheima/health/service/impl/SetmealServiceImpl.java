@@ -4,8 +4,10 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.health.constant.RedisConstant;
+import com.itheima.health.dao.CheckGroupDao;
 import com.itheima.health.dao.SetmealDao;
 import com.itheima.health.entity.PageResult;
+import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import com.itheima.health.util.QiniuUtils;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
+//@Transactional
 public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
@@ -44,9 +46,15 @@ public class SetmealServiceImpl implements SetmealService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @Autowired
+    private CheckGroupDao checkGroupDao;
+
     @Override
     public Setmeal findById(Integer id) {
-        return setmealDao.findById(id);
+        Setmeal setmeal = setmealDao.findById(id);
+        List<CheckGroup> list = checkGroupDao.findCheckGroupListBySetmealId(setmeal.getId());
+        setmeal.setCheckGroups(list);
+        return setmeal;
     }
 
     @Override

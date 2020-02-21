@@ -14,7 +14,7 @@
                http://www.springframework.org/schema/tx/spring-tx.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <dubbo:application name="health_service"/>
-    <dubbo:protocol name="dubbo" port="20887"/>
+    <dubbo:protocol name="dubbo" port="20999"/>
     <dubbo:registry address="zookeeper://localhost:2181"/>
     <dubbo:annotation package="com.itheima.health.service"/>
 

@@ -1,6 +1,7 @@
 package com.itheima.health.dao;
 
 import com.github.pagehelper.Page;
+import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.pojo.Setmeal;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface SetmealDao {
     void delete(Integer id);
 
     List<Setmeal> getSetmeal();
+
+
 }
