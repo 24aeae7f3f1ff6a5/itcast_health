@@ -30,9 +30,36 @@
         </if>
     </select>
 
+
     <!--根据主键ID查询-->
-    <select id="findById" parameterType="int" resultType="setmeal">
-        SELECT * FROM t_setmeal WHERE id = #{id}
+    <!--<select id="findById" parameterType="int" resultType="setmeal">-->
+    <!--SELECT * FROM t_setmeal WHERE id = #{id}-->
+    <!--</select>-->
+
+    <!--封装Setmeal中的checkGroups属性-->
+    <resultMap id="setmealMap" type="setmeal" >
+        <!--封装主键-->
+        <id column="id" property="id"/>
+        <!--封装普通字段-->
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+        <!--封装集合-->
+        <collection property="checkGroups" column="id" select="com.itheima.health.dao.CheckGroupDao.findCheckGroupListBySetmealId">
+
+        </collection>
+
+    </resultMap>
+
+    <!--根据主键ID查询-->
+    <select id="findById" parameterType="int" resultMap="setmealMap">
+      SELECT * FROM t_setmeal WHERE id = #{id}
     </select>
 
 

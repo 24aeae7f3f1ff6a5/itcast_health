@@ -32,6 +32,9 @@
        DELETE FROM t_checkitem WHERE id = #{id}
     </delete>
 
-
+    <!--根据checkgroup_id查询对应的checkitem-->
+    <select id="findCheckItemListByCheckGroupId" parameterType="int" resultType="checkitem">
+        SELECT * FROM t_checkitem WHERE id IN(SELECT checkitem_id FROM t_checkgroup_checkitem WHERE checkgroup_id = #{checkgroup_id})
+    </select>
 </mapper>
 
