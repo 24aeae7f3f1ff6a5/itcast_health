@@ -40,4 +40,6 @@ public class ValidateCodeUtils {
         String capstr = hash1.substring(0, length);
         return capstr;
     }
+
+
 }
