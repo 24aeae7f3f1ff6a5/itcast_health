@@ -22,13 +22,14 @@ public class ValidateCodeController {
     @RequestMapping(value = "/send4Order")
     public Result send4Order(String telephone) {
         String param = String.valueOf(ValidateCodeUtils.generateValidateCode(4));
-        try {
-            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE, telephone, param);
-        } catch (ClientException e) {
-            e.printStackTrace();
-            // 发送失败
-            return new Result(false, MessageConstant.SEND_VALIDATECODE_FAIL);
-        }
+        // 节约用钱，把下面这段发送短信的代码注释掉了
+//        try {
+//            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE, telephone, param);
+//        } catch (ClientException e) {
+//            e.printStackTrace();
+//            // 发送失败
+//            return new Result(false, MessageConstant.SEND_VALIDATECODE_FAIL);
+//        }
         // 打印验证码
         System.out.println(param);
         // 验证码发送成功，将对应的手机号和验证码存入redis并设置倒计时
