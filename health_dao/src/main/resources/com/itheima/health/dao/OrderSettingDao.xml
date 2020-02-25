@@ -24,6 +24,14 @@
         SELECT * FROM t_ordersetting WHERE orderDate BETWEEN #{beginDate} AND #{endDate}
     </select>
 
+    <!--根据预约日期时间查询预约对象-->
+    <select id="findByOrderDate" parameterType="date" resultType="OrderSetting">
+        SELECT * FROM t_ordersetting WHERE orderDate = #{orderDate}
+    </select>
 
+    <!--指定预约日期人数加1-->
+    <update id="editReservationsByOrderDate" parameterType="Date">
+        UPDATE t_ordersetting SET reservations = reservations + 1 WHERE orderDate = #{orderDate}
+    </update>
 
 </mapper>

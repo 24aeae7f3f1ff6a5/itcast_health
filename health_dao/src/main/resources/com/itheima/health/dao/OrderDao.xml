@@ -4,7 +4,45 @@
 <!--指定namespace-->
 <mapper namespace="com.itheima.health.dao.OrderDao">
 
+    <resultMap id="orderResultMap" type="com.itheima.health.pojo.Order">
+        <id column="id" property="id"/>
+        <result column="member_id" property="memberId"/>
+        <result column="orderDate" property="orderDate"/>
+        <result column="orderType" property="orderType"/>
+        <result column="orderStatus" property="orderStatus"/>
+        <result column="setmeal_id" property="setmealId"/>
+    </resultMap>
+    <!--根据条件查询订单对象-->
+    <select id="findByCondition" parameterType="Order" resultMap="orderResultMap">
+        select * from t_order
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="memberId != null">
+                AND member_id = #{memberId}
+            </if>
+            <if test="orderDate != null">
+                AND orderDate = #{orderDate}
+            </if>
+            <if test="orderType != null and orderType.length>0">
+                AND orderType = #{orderType}
+            </if>
+            <if test="orderStatus != null and orderStatus.length>0">
+                AND orderStatus = #{orderStatus}
+            </if>
+            <if test="setmealId != null">
+                AND setmeal_id = #{setmealId}
+            </if>
+        </where>
+    </select>
 
-
-
+    <!--新增预约记录-->
+    <insert id="add" parameterType="Order">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO t_order (member_id,orderDate,orderType,orderStatus,setmeal_id) VALUES
+        (#{memberId},#{orderDate},#{orderType},#{orderStatus},#{setmealId})
+        </insert>
 </mapper>
